@@ -1,0 +1,46 @@
+{% extends "baseforms.html" %}
+
+{% block head %}  <title>Esqueci a Senha</title> {% endblock head %}
+
+
+{% block form %}
+<form action="/resetpw" method="post" class="box">
+     <div class="label has-text-centered pb-5 pt-5">
+         Padaria
+     </div>
+     <div class="field">
+         <label class="label mb-0">
+             <span class="is-size-7">E-mail ou CNPJ</span>
+         </label>
+         <div class="controll has-icons-left">
+             <input type="text" class="input" name="username" placeholder="Exemplo@exemplo.com" value="{{ email }}" required>
+             <span class="icon is-small is-left">
+                 <i class="fa fa-envelope"></i>
+             </span>
+         </div>
+     </div>
+     
+     <div class="field has-text-centered pt-1">
+         <div class="columns">
+             <div class="column">
+                 <input type="submit" class="button is-link" value="Recuperar Senha"></input>
+             </div>
+             <div class="column">
+                <label class="label">
+                    <a class="button" href="{{ url_for('site.index')}}"> Entrar </a>
+                </label>
+             </div>
+         </div>
+     </div>
+</form>
+{% endblock form %}
+
+{% block error %}
+{% if error %}
+<article class="message is-danger">
+    <div class="message-body">
+      {{ error }}
+    </div>
+  </article>
+  {% endif %}
+{% endblock error %}

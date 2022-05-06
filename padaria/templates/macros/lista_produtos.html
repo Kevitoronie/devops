@@ -1,0 +1,82 @@
+{% macro lista_produtos(produtos,admin) %}
+
+    {% for prod in produtos%}
+        <div class="box pb-0">
+            <article class="media">
+
+            <div class="media-left pt-2 pr-2">
+                <figure class="image is-128x128">
+                <img src="https://firebasestorage.googleapis.com/v0/b/padaria-46670.appspot.com/o/produto%2F{{produtos[prod]['id']}}?alt=media" alt="Image">
+                </figure>
+            </div>
+
+            <div class="media-content">
+                <div class="content">
+                <div class="level-left">
+
+                    <div class="level-left">
+                    <strong>{{ produtos[prod]['title'] }}</strong>
+                    </div>
+                    <div class="level-right">
+
+                    </div>
+                    
+                </div>
+                <p>
+                    <small>Valor: </small><span> R${{ produtos[prod]['pricemin'] }} -  R${{ produtos[prod]['pricemax'] }}</span>
+                    <br>
+                    <small>Quantidade: </small><span> {{ produtos[prod]['quant'] }}</span> <span> {{ produtos[prod]['uniquant'] }}</span>
+                    <br>
+                    <small>Preferência de Marca: </small><span> {{ produtos[prod]['prefmark'] }}</span>
+                    <br>
+                    <small>Local de Entrega: </small><span>{{ produtos[prod]['localentrega'] }}</span>
+                    <br>
+                    <small>Categoria: </small><span>{{ produtos[prod]['cat'] }}</span>
+                    <br>
+                    <small>Descrição: </small><small>{{ produtos[prod]['desc'] }}</small>   
+                    </p>
+                    {% if admin == '1' %}
+                    <a class="button is-primary is-size-7" href="\produto\editar\{{ produtos[prod]['id'] }}">
+                        Editar
+                    </a>
+                    <a class="button is-danger is-size-7" href="\produto\delete\{{ produtos[prod]['id'] }}">
+                        Desativar
+                    </a>
+                    {% endif %}
+                    {% if admin == '0' %}
+                    <a class="button is-link is-rounded is-size-7" href="\produto\{{ produtos[prod]['id'] }}">
+                    Enviar Proposta
+                    </a>
+                    {% endif %}
+
+
+                </div>
+                <nav class="level is-mobile">
+                <div class="level-left">
+                    <a class="level-item" aria-label="reply">
+                    <span class="icon is-small">
+                        <i class="fas fa-reply" aria-hidden="true"></i>
+                    </span>
+                    </a>
+                    <a class="level-item" aria-label="retweet">
+                    <span class="icon is-small">
+                        <i class="fas fa-retweet" aria-hidden="true"></i>
+                    </span>
+                    </a>
+                    <a class="level-item" aria-label="like">
+                    <span class="icon is-small">
+                        <i class="fas fa-heart" aria-hidden="true"></i>
+                    </span>
+                    </a>
+                </div>
+                </nav>
+            </div>
+
+            <div class="media-content">
+
+            </div>
+            </article>
+        </div>
+    {% endfor %}
+
+{% endmacro %}

@@ -1,0 +1,27 @@
+{% extends "baseforms.html" %}
+
+{% block head %}  <title>Esqueci a Senha</title> {% endblock head %}
+
+
+{% block form %}
+<form action="" method="post" class="box">
+    <div class="label has-text-centered pb-5 pt-5">
+        Padaria
+    </div>
+    <div class="field has-text-centered">
+        <label class="label mb-0">
+            <span class="is-size-6 has-text-primary">Recuperação de senha enviada a seu e-mail!</span>
+            
+        </label>
+    </div>  
+    <div class="field has-text-centered pt-1">
+        <div class="columns">
+            <div class="column">
+               <label class="label">
+                   <a class="button" href="{{ url_for('site.index')}}"> Entrar </a>
+               </label>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock form %}

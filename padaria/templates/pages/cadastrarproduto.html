@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% import "macros/lista_produtos.html" as list_prod %}
+{% import "macros/lista_filtros.html" as list_fil %}
+
+{% block head %}  <title>Produtos</title> {% endblock head %}
+
+
+{% block body %}
+
+<div class="block pr-5">    
+      
+    <div class="column is-size-7-mobile is-size-7-desktop is-half is-offset-one-quarter">
+
+      <h3 class="title is-3 is-size-6-mobile has-text-centered">Produtos</h3>
+
+      <div class="panel-block">
+        <p class="control has-icons-left">
+          <input class="input is-link" type="text" placeholder="Pesquisar Produtos">
+          <span class="icon is-left">
+            <i class="fas fa-search" aria-hidden="true"></i>
+          </span>
+        </p>
+      </div>
+      
+      <div class="select id-link is-rounded">
+        <select>
+          {% for f in [Todos, Farinhas, Grãos, Lacto, Verduras, Legumes, Carne, Frutas] %}
+
+          <option> {{ f }} </option>
+
+          {% endfor %}
+        </select>
+      </div>
+
+      {{ list_prod.lista_produtos(p) }}
+    </div>
+
+  </div>
+</div>
+
+{% if mod == '1' %}
+
+<div class="modal is-active">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <form action="\produto\{{ produto['id'] }}" method="post" class="box">
+    <header class="modal-card-head">
+      <p class="modal-card-title">{{ produto['title'] }}</p>
+      <a class="delete" aria-label="close" href="\produtos"></a>
+    </header>
+    <section class="modal-card-body">
+        <div class="field">
+          <div class="columns">
+            <div class="column">
+              <figure class="image">
+                <img src="https://bulma.io/images/placeholders/256x256.png" alt="Image">
+              </figure>
+            </div>
+
+            <div class="column">
+              <p>
+                <small>Valor: </small><span>R$ {{ produto['price'] }}</span>
+                <br>
+                <small>Quantidade: </small><span> {{ produto['quant'] }}</span> <span> {{ produto['uniquant'] }}</span>
+                <br>
+                <small>Preferência de Marca: </small><span> {{ produto['prefmark'] }}</span>
+                <br>
+                <small>Local de Entrega: </small><span>{{ produto['localentrega'] }}</span>
+                <br>
+                <small>Descrição: </small><small>{{ produto['desc'] }}</small>      
+                <br>
+                <br>
+                <small>Proposta</small><span> <input type="number" class="input" name="valorproposta" placeholder="R$ 999,99" required> </span>
+                <br>
+                <small>Quantidade</small>
+                <span><div class="columns">
+                  <div class="column">
+                    <input type="number" class="input" name="quantproposta" placeholder=" 99,99 " required>
+                  </div>
+                  <div class="column">
+                    <div class="select id-link is-rounded">
+                      <select name="selectunit">    
+                        <option value="uni"> unidade </option>          
+                        <option value="g"> g </option>
+                        <option value="kg"> Kg </option>
+                        <option value="L"> L </option>
+                        <option value="mL"> mL </option>
+                      </select>
+                    </div>
+                  </div>
+                </div> </span>
+              </p>
+                
+  
+            </div>
+          </div>
+        </div>
+   
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-link" type="input">Enviar Proposta</button>
+      <a class="button" href="\produtos">Cancelar</a>
+    </footer>
+  </form>
+  </div>
+</div>
+
+{% endif %}
+
+{% if mod == '2' %}
+
+
+<div class="modal is-active">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">{{ produto['title'] }}</p>
+      <button class="delete" aria-label="close"></button>
+    </header>
+    <section class="modal-card-body">
+      <article class="message is-success">
+        <div class="message-body">
+          {{ msg }}
+        </div>
+      </article>
+    </section>
+    <footer class="modal-card-foot">
+      <a class="button" href="\produtos">Voltar</a>
+    </footer>
+  </div>
+</div>
+
+{% endif %}
+
+{% endblock body %}

@@ -1,0 +1,5 @@
+WINDOWNS POWER SHELL
+
+    $ENV:FLASK_APP="padaria/app.py"
+    set FLASK_APP=padaria/app.py
+    flask run

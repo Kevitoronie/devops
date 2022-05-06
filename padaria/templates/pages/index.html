@@ -1,0 +1,81 @@
+{% extends "baseforms.html" %}
+
+{% block head %}  <title>Login</title> {% endblock head %}
+
+
+{% block form %}
+<form action="/" method="post" class="box">
+     <div class="label has-text-centered pb-5 pt-5">
+         Padaria
+     </div>
+     <div class="field">
+         <label class="label mb-0">
+             <span class="is-size-7">E-mail ou CNPJ</span>
+         </label>
+         <div class="controll has-icons-left">
+             <input type="text" class="input" name="username" placeholder="Exemplo@exemplo.com" required>
+             <span class="icon is-small is-left">
+                 <i class="fa fa-envelope"></i>
+             </span>
+         </div>
+     </div>
+     <div class="field">
+         <label class="label mb-0">
+             <span class="is-size-7">Senha</span>
+         </label>
+         <div class="controll has-icons-left">
+             <input type="password" class="input" name="psw" placeholder="******" required>
+             <span class="icon is-small is-left">
+                 <i class="fa fa-envelope"></i>
+             </span>
+         </div>
+         <div class="columns">
+             <div class="column">
+                 <div class="field">
+                     <label class="label">
+                         <input type="checkbox" class="checkbox">
+                         <span class="is-size-7"> Lembrar de mim! </span>
+                     </label>
+                 </div>
+             </div>
+             <div class="column">
+                 <div class="field">
+                     <label class="label">
+                        <a class="level-right is-size-7"  href="/resetpw"> Esqueci a senha</a>
+                     </label>
+                 </div>
+             </div>
+         </div>
+     </div>
+     <div class="field has-text-centered pt-1">
+         <div class="columns">
+             <div class="column">
+                 <input type="submit" class="button is-link" value="Entrar"></input>
+             </div>
+             <div class="column">
+                <label class="label">
+                    <a class="button" href="{{ url_for('site.register')}}"> Registrar </a>
+                </label>
+             </div>
+         </div>
+     </div>
+</form>
+{% endblock form %}
+
+
+    {% block error %}
+    {% if error %}
+    <article class="message is-danger">
+        <div class="message-body">
+          {{ error }}
+        </div>
+      </article>
+      {% endif %}
+      {% if ok %}
+      <article class="message is-primary">
+          <div class="message-body">
+            {{ ok }}
+          </div>
+        </article>
+        {% endif %}
+    {% endblock error %}

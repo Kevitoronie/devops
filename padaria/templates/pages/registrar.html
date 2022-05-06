@@ -1,0 +1,105 @@
+{% extends "baseforms.html" %}
+
+{% block head %}  <title>Registrar</title> {% endblock head %}
+
+{% block form %}
+<form action="/register" class="box" method="POST">
+    <div class="label has-text-centered pb-5 pt-5">
+        Padaria
+    </div>
+
+    <div class="field">
+        <label class="label mb-0">
+            <span class="is-size-7">CNPJ</span>
+        </label>
+        <div class="controll has-icons-left">
+            <input type="number" class="input" name="cnpj" placeholder="99.999.999\0009-99" id="myInput" value="{{ dados['cnpj'] }}">
+            <span class="icon is-small is-left">
+                <i class="fa fa-envelope"></i>
+            </span>
+        </div>
+
+        <label class="label mb-0">
+            <span class="is-size-7">Nome Fantasia</span>
+        </label>
+        <div class="controll has-icons-left">
+            <input type="text" class="input" name="nf" placeholder="EMPRESA" value="{{ dados['nf'] }}">
+            <span class="icon is-small is-left">
+                <i class="fa fa-envelope"></i>
+            </span>
+        </div>
+
+        <label class="label mb-0">
+            <span class="is-size-7">E-mail</span>
+        </label>
+        <div class="controll has-icons-left">
+            <input type="text" class="input" name="email" placeholder="Exemplo@exemplo.com.br" value="{{ dados['email'] }}">
+            <span class="icon is-small is-left">
+                <i class="fa fa-envelope"></i>
+            </span>
+        </div>
+
+        <label class="label mb-0">
+            <span class="is-size-7">Telefone Celular</span>
+        </label>
+        <div class="controll has-icons-left">
+            <input type="number" class="input" name="telcel" placeholder="(11)9 9999-999" value="{{ dados['telcel'] }}">
+            <span class="icon is-small is-left">
+                <i class="fa fa-envelope"></i>
+            </span>
+        </div>
+
+        
+        <label class="label mb-0">
+            <span class="is-size-7">Senha</span>
+        </label>
+        <div class="controll has-icons-left">
+            <input type="password" class="input" name="pw" placeholder="*****">
+            <span class="icon is-small is-left">
+                <i class="fa fa-envelope"></i>
+            </span>
+        </div>
+
+        <label class="label mb-0">
+            <span class="is-size-7">Confirme sua Senha</span>
+        </label>
+        <div class="controll has-icons-left">
+            <input type="password" class="input" name="pw_confirm" placeholder="*****">
+            <span class="icon is-small is-left">
+                <i class="fa fa-envelope"></i>
+            </span>
+        </div>
+
+    </div>
+
+    <div class="columns has-text-centered">
+        <div class="column">
+            <input type="submit" class="button is-link" value="Registrar"></input>
+        </div>
+        <div class="column ">
+            <label class="label">
+                <a class="button" href="{{ url_for('site.index')}}"> Entrar </a>
+            </label>
+        </div>
+    </div>
+   </form>
+{% endblock form %}
+
+{% block error %} 
+{% if error %}
+<article class="message is-danger">
+    <div class="message-body">
+      {{ error }}
+    </div>
+  </article>
+{% endif %}
+
+{% if ok %}
+  <article class="message is-primary">
+      <div class="message-body">
+        {{ ok }}
+      </div>
+    </article>
+{% endif %}
+
+{% endblock error %}

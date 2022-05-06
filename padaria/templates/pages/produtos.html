@@ -1,0 +1,506 @@
+{% extends "base.html" %}
+{% import "macros/lista_produtos.html" as list_prod %}
+{% import "macros/lista_filtros.html" as list_fil %}
+
+{% block head %}  <title>Produtos</title> {% endblock head %}
+
+
+{% block body %}
+
+<div class="block pr-5">    
+  <form action="\produtos" method="post" class="box">
+    <div class="column is-size-7-mobile is-size-7-desktop is-half is-offset-one-quarter">
+    <h3 class="title is-3 is-size-6-mobile has-text-centered">Produtos</h3>
+        
+      <div class="panel-block">
+        <p class="control has-icons-left">
+          <input class="input is-link" type="text" placeholder="Pesquisar Produtos" name='pesquisa' value="{{ pesq }}">
+          <span class="icon is-left">
+            <i class="fas fa-search" aria-hidden="true"></i>
+          </span>
+        </p>
+      </div>
+
+    <div class="columns">
+
+      <div class="column">
+        {% if admin == '1' %}
+        <a class="button is-small is-link is-rounded" href="\produto\adicionar">Adicionar</a>
+        {% endif %}
+      </div>
+ 
+      <div class="column has-text-right">
+        
+        <div class="select is-small is-link is-rounded ">
+          <select type='input' name="filtro"> 
+            <option value="{{ filt }}"> {{ filt }} </option> 
+          {% for f in ['Todos', 'Açucares', 'Carboidratos', 'Carnes e Ovos', 'Frios', 'Frutas', 'Legumes', 'Leites e Derivados','Óleos','Verguras'] %}
+            <option value="{{ f }}"> {{ f }} </option>      
+          {% endfor %}    
+          </select>
+        </div>
+        <input type="submit" class="button is-rounded is-small is-link " value="Filtrar">
+
+      </div>
+
+    </div>
+    </form>
+
+    {% if p != '' %}
+    {{ list_prod.lista_produtos(p, admin) }}
+    {% endif %}
+     
+    </div>
+
+</div>
+
+{% if mod == '1' %}
+
+<div class="modal is-active">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <form action="\produto\{{ produto['id'] }}" method="post" class="box">
+    <header class="modal-card-head">
+      <p class="modal-card-title">{{ produto['title'] }}</p>
+      <a class="delete" aria-label="close" href="\produtos"></a>
+    </header>
+    <section class="modal-card-body">
+        <div class="field">
+          <div class="columns">
+            <div class="column">
+              <figure class="image">
+                <img src="https://firebasestorage.googleapis.com/v0/b/padaria-46670.appspot.com/o/produto%2F{{ produto['id'] }}?alt=media" alt="Image">
+              </figure>
+            </div>
+
+            <div class="column">
+              <p>
+                <small>Valor: </small><span>R${{ produto['pricemin'] }} - R${{ produto['pricemax'] }} </span>
+                <br>
+                <small>Quantidade: </small><span> {{ produto['quant'] }}</span> <span> {{ produto['uniquant'] }}</span>
+                <br>
+                <small>Preferência de Marca: </small><span> {{ produto['prefmark'] }}</span>
+                <br>
+                <small>Local de Entrega: </small><span>{{ produto['localentrega'] }}</span>
+                <br>
+                <small>Descrição: </small><small>{{ produto['desc'] }}</small>      
+                <br>
+                <br>
+                <small>Proposta</small><span> <input type="number" class="input" name="valorproposta" placeholder="R$ 999,99" required> </span>
+                <br>
+                <small>Quantidade</small>
+                <span><div class="columns">
+                  <div class="column">
+                    <input type="number" class="input" name="quantproposta" placeholder=" 99,99 " required>
+                  </div>
+                  <div class="column">
+                    <div class="select id-link is-rounded">
+                      <select name="selectunit">    
+                        <option value="uni"> unidade </option>          
+                        <option value="g"> g </option>
+                        <option value="kg"> Kg </option>
+                        <option value="L"> L </option>
+                        <option value="mL"> mL </option>
+                      </select>
+                    </div>
+                  </div>
+                </div> </span>
+              </p>
+                
+  
+            </div>
+          </div>
+        </div>
+   
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-link" type="input">Enviar Proposta</button>
+      <a class="button" href="\produtos">Cancelar</a>
+    </footer>
+  </form>
+  </div>
+</div>
+
+{% endif %}
+
+{% if mod == '2' %}
+
+
+<div class="modal is-active">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">{{ produto['title'] }}</p>
+      <button class="delete" aria-label="close"></button>
+    </header>
+    <section class="modal-card-body">
+      <article class="message is-success">
+        <div class="message-body">
+          {{ msg }}
+        </div>
+      </article>
+    </section>
+    <footer class="modal-card-foot">
+      <a class="button" href="\produtos">Voltar</a>
+    </footer>
+  </div>
+</div>
+
+{% endif %}
+
+
+{% if mod == 'adicionar' %}
+<div class="modal is-active">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <form action="\produto\adicionar" method="post" class="box" enctype="multipart/form-data">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Adicionar Produto</p>
+      <a class="delete" aria-label="close" href="\produtos"></a>
+    </header>
+    <section class="modal-card-body">
+    <div class="field">
+        <label class="label mb-0">
+            <span class="is-size-7">Nome do Produto</span>
+        </label>
+        <div class="controll has-icons-left">
+            <input type="text" class="input" name="nome" placeholder="Queijo Sádia" required>
+            <span class="icon is-small is-left">
+                <i class="fa fa-envelope"></i>
+            </span>
+        </div>
+    </div>
+    <div class="field">
+        <div class="columns">
+            <div class="column">
+              <label class="label mb-0">
+                <span class="is-size-7">Quantidade</span>
+              </label>
+            <div class="controll has-icons-left">
+                <input type="number" step=".01" class="input" name="quant" placeholder="00,00" required>
+                <span class="icon is-small is-left">
+                    <i class="fa fa-envelope"></i>
+                </span>
+            </div>
+            </div>
+            <div class="column is-3">
+              <label class="label mb-0">
+                <span class="is-size-7">Unidade de Medida</span>
+              </label>
+              <div class="select id-link">
+                <select name="selectunit">    
+                  <option value="uni"> unidade </option>          
+                  <option value="g"> g </option>
+                  <option value="kg"> Kg </option>
+                  <option value="L"> L </option>
+                  <option value="mL"> mL </option>
+                </select>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+      <div class="columns">
+          <div class="column">
+              <label class="label mb-0">
+                <span class="is-size-7">Valor Mínimo</span>
+              </label>
+            <div class="controll has-icons-left">
+                <input type="number" step=".01" class="input" name="vmin" placeholder="R$ 0000,00" required>
+                <span class="icon is-small is-left">
+                    <i class="fa fa-envelope"></i>
+                </span>
+            </div>
+          </div>
+          <div class="column">
+            <label class="label mb-0">
+              <span class="is-size-7">Valor Máximo</span>
+            </label>
+          <div class="controll has-icons-left">
+              <input type="number" step=".01" class="input" name="vmax" placeholder="R$ 0000,00" required>
+              <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+              </span>
+          </div>
+          </div>
+      </div>
+    </div>
+    <div class="field">
+    <div class="columns">
+        <div class="column">
+          <div class="columns">
+            <div class="column">
+              <label class="label mb-0">
+                <span class="is-size-7">Categoria</span>
+              </label>
+              <div class="select is-small is-link is-rounded">
+                <select type='input' name="selectcat">    
+                {% for f in ['Açucares', 'Carboidratos', 'Carnes e Ovos', 'Frios', 'Frutas', 'Legumes', 'Leites e Derivados','Óleos','Verguras'] %}
+                  <option value="{{ f }}"> {{ f }} </option>      
+                {% endfor %}    
+                </select>
+              </div>
+            </div>
+            <div class="column">
+              <label class="label mb-0">
+                <span class="is-size-7">Pref. de Marca</span>
+              </label>
+            <div class="controll has-icons-left">
+                <input type="text" class="input" name="pmark" placeholder="Sádia" required>
+                <span class="icon is-small is-left">
+                    <i class="fa fa-envelope"></i>
+                </span>
+            </div>
+          </div>
+           
+          </div>
+        </div>
+        <div class="column">
+          <label class="label mb-0">
+            <span class="is-size-7">Local de Entrega</span>
+          </label>
+        <div class="controll has-icons-left">
+            <input type="text" class="input" name="lentreg" placeholder="Padaria do zé" required>
+            <span class="icon is-small is-left">
+                <i class="fa fa-envelope"></i>
+            </span>
+        </div>
+        </div>
+    </div>
+    </div>
+  
+    <div class="field">
+      <label class="label mb-0">
+        <span class="is-size-7">Descrição</span>
+      </label>
+    <div class="controll has-icons-left">
+        <input type="text" class="input" name="desc" placeholder="Padaria do zé" required>
+        <span class="icon is-small is-left">
+            <i class="fa fa-envelope"></i>
+        </span>
+    </div>
+    </div>
+
+    <div id="file-js-example" class="file is-right is-info">
+      <label class="file-label">
+        <input class="file-input" type="file" name="foto">
+        <span class="file-cta">
+          <span class="file-icon">
+            <i class="fas fa-upload"></i>
+          </span>
+          <span class="file-label">
+            Foto do Produto
+          </span>
+        </span>
+        <span class="file-name">
+          Nenhuma foto seleciona...
+        </span>
+      </label>
+    </div>
+    
+    <script>
+      const fileInput = document.querySelector('#file-js-example input[type=file]');
+      fileInput.onchange = () => {
+        if (fileInput.files.length > 0) {
+          const fileName = document.querySelector('#file-js-example .file-name');
+          fileName.textContent = fileInput.files[0].name;
+        }
+      }
+    </script>
+
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-link" type="input">Adicionar</button>
+      <a class="button" href="\produtos">Cancelar</a>
+    </footer>
+  </form>
+  </div>
+</div>
+
+{% endif %}
+
+{% if mod == 'editar' %}
+<div class="modal is-active">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <form action="\produto\editar\{{ produto['id'] }}" method="post" class="box" enctype="multipart/form-data">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Adicionar Produto</p>
+      <a class="delete" aria-label="close" href="\produtos"></a>
+    </header>
+    <section class="modal-card-body">
+    <div class="field">
+        <label class="label mb-0">
+            <span class="is-size-7">Nome do Produto</span>
+        </label>
+        <div class="controll has-icons-left">
+            <input type="text" class="input" name="title" placeholder="{{ produto['title'] }}" value="{{ produto['title'] }}" required>
+            <span class="icon is-small is-left">
+                <i class="fa fa-envelope"></i>
+            </span>
+        </div>
+    </div>
+    <div class="field">
+        <div class="columns">
+            <div class="column">
+              <label class="label mb-0">
+                <span class="is-size-7">Quantidade</span>
+              </label>
+            <div class="controll has-icons-left">
+                <input type="number" class="input" name="quant" placeholder="{{ produto['quant'] }}" value="{{ produto['quant'] }}" required>
+                <span class="icon is-small is-left">
+                    <i class="fa fa-envelope"></i>
+                </span>
+            </div>
+            </div>
+            <div class="column is-3">
+              <label class="label mb-0">
+                <span class="is-size-7">Unidade de Medida</span>
+              </label>
+              <div class="select id-link">
+                <select name="uniquant">  
+                  <option value="{{ produto['uniquant'] }}">{{ produto['uniquant'] }}</option>  
+                  <option value="uni"> unidade </option>          
+                  <option value="g"> g </option>
+                  <option value="kg"> Kg </option>
+                  <option value="L"> L </option>
+                  <option value="mL"> mL </option>
+                </select>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+      <div class="columns">
+          <div class="column">
+              <label class="label mb-0">
+                <span class="is-size-7">Valor Mínimo</span>
+              </label>
+            <div class="controll has-icons-left">
+                <input type="number" class="input" name="pricemin" placeholder="{{ produto['pricemin'] }}" value="{{ produto['pricemin'] }}" required>
+                <span class="icon is-small is-left">
+                    <i class="fa fa-envelope"></i>
+                </span>
+            </div>
+          </div>
+          <div class="column">
+            <label class="label mb-0">
+              <span class="is-size-7">Valor Máximo</span>
+            </label>
+          <div class="controll has-icons-left">
+              <input type="number" class="input" name="pricemax" placeholder="{{ produto['pricemax'] }}" value="{{ produto['pricemax'] }}" required>
+              <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+              </span>
+          </div>
+          </div>
+      </div>
+    </div>
+    <div class="field">
+      <div class="columns">
+          <div class="column">
+            <div class="columns">
+              <div class="column">
+                <label class="label mb-0">
+                  <span class="is-size-7">Categoria</span>
+                </label>
+                <div class="select is-small is-link is-rounded">
+                  <select type='input' name="cat">    
+                    <option value="{{ produto['cat'] }}"> {{ produto['cat'] }} </option>  
+                  {% for f in ['Açucares', 'Carboidratos', 'Carnes e Ovos', 'Frios', 'Frutas', 'Legumes', 'Leites e Derivados','Óleos','Verguras'] %}
+                    <option value="{{ f }}"> {{ f }} </option>      
+                  {% endfor %}    
+                  </select>
+                </div>
+              </div>
+              <div class="column">
+                <label class="label mb-0">
+                  <span class="is-size-7">Pref. de Marca</span>
+                </label>
+              <div class="controll has-icons-left">
+                  <input type="text" class="input" name="prefmark" placeholder="{{ produto['prefmark'] }}" value="{{ produto['prefmark'] }}" required>
+                  <span class="icon is-small is-left">
+                      <i class="fa fa-envelope"></i>
+                  </span>
+              </div>
+            </div>
+             
+            </div>
+          </div>
+          <div class="column">
+            <label class="label mb-0">
+              <span class="is-size-7">Local de Entrega</span>
+            </label>
+          <div class="controll has-icons-left">
+            <input type="text" class="input" name="localentrega" placeholder="{{ produto['localentrega'] }}" value="{{ produto['localentrega'] }}" required>
+              <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+              </span>
+          </div>
+          </div>
+      </div>
+      </div>
+
+  
+    <div class="field">
+      <label class="label mb-0">
+        <span class="is-size-7">Descrição</span>
+      </label>
+    <div class="controll has-icons-left">
+        <input type="text" class="input" name="desc" placeholder="{{ produto['desc'] }}" value="{{ produto['desc'] }}" required>
+        <span class="icon is-small is-left">
+            <i class="fa fa-envelope"></i>
+        </span>
+    </div>
+    </div>
+
+    <div class="columns">
+      <div class="column">
+        <figure class="image is-128x128">
+          <img src="https://firebasestorage.googleapis.com/v0/b/padaria-46670.appspot.com/o/produto%2F{{ produto['id'] }}?alt=media" alt="Image">
+        </figure>
+      </div>
+      <div class="column has-text-right">
+        <div id="file-js-example" class="file is-right is-info">
+          <label class="file-label">
+            <input class="file-input" type="file" name="foto">
+            <span class="file-cta">
+              <span class="file-icon">
+                <i class="fas fa-upload"></i>
+              </span>
+              <span class="file-label">
+                Foto do Produto
+              </span>
+            </span>
+            <span class="file-name">
+              Nenhuma foto seleciona...
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+   
+    
+    <script>
+      const fileInput = document.querySelector('#file-js-example input[type=file]');
+      fileInput.onchange = () => {
+        if (fileInput.files.length > 0) {
+          const fileName = document.querySelector('#file-js-example .file-name');
+          fileName.textContent = fileInput.files[0].name;
+        }
+      }
+    </script>
+
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-danger" type="input">Editar</button>
+      <a class="button" href="\produtos">Cancelar</a>
+    </footer>
+  </form>
+  </div>
+</div>
+
+{% endif %}
+
+{% endblock body %}

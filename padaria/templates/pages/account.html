@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block head %}  <title>Minha Conta</title> {% endblock head %}
+
+{% block body %}
+<h3 class="title has-text-centered">Minha Conta</h3>
+<div class="columns hero is-link is-centered is-multiline">
+    <div class="column is-8 is-offset-2 mt-5 mb-5">
+        <form action="/minhaconta/editar/{{ dados['id'] }}" class="box" method="POST" enctype="multipart/form-data">
+            <div class="field">
+                <div class="columns ">
+                    <div class="column">
+                        <label class="label mb-0">
+                            <span class="is-size-7">CNPJ</span>
+                        </label>
+                        <div class="controll has-icons-left">
+                            <input type="number" class="input" name="cnpj" placeholder="{{ dados['cnpj'] }}" id="myInput" value="{{ dados['cnpj'] }}">
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                <label class="label mb-0">
+                                    <span class="is-size-7">Endereço</span>
+                                </label>
+                                <div class="controll has-icons-left">
+                                    <input type="text" class="input" name="end" placeholder="{{ dados['end'] }}" id="myInput" value="{{ dados['end'] }}">
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="column is-3">
+                                <label class="label mb-0">
+                                    <span class="is-size-7">Número</span>
+                                </label>
+                                <div class="controll has-icons-left">
+                                    <input type="text" class="input" name="num" placeholder="{{ dados['num'] }}" id="myInput" value="{{ dados['num'] }}">
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <label class="label mb-0">
+                            <span class="is-size-7">CEP</span>
+                        </label>
+                        <div class="controll has-icons-left">
+                            <input type="text" class="input" name="cep" placeholder="{{ dados['cep'] }}" value="{{ dados['cep'] }}">
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                        </div>
+
+                        <label class="label mb-0">
+                            <span class="is-size-7">E-mail</span>
+                        </label>
+                        <div class="controll has-icons-left">
+                            <input type="text" class="input" name="email" placeholder="{{ dados['email'] }}" value="{{ dados['email'] }}">
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="column ">
+                        <label class="label mb-0">
+                            <span class="is-size-7">Razão Social</span>
+                        </label>
+                        <div class="controll has-icons-left">
+                            <input type="text" class="input" name="rs" placeholder="{{ dados['rs'] }}" value="{{ dados['rs'] }}">
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                        </div>
+
+
+                        
+                        <div class="columns">
+                            <div class="column">
+                                <label class="label mb-0">
+                                    <span class="is-size-7">Bairro</span>
+                                </label>
+                                <div class="controll has-icons-left">
+                                    <input type="text" class="input" name="bairro" placeholder="{{ dados['bairro'] }}" value="{{ dados['bairro'] }}">
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <label class="label mb-0">
+                            <span class="is-size-7">Telefone Fixo</span>
+                        </label>
+                        <div class="controll has-icons-left">
+                            <input type="text" class="input" name="telfixo" placeholder="{{ dados['telfixo'] }}" id="myInput" value="{{ dados['telfixo'] }}">
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                        </div>
+                            
+                        <div class="has-text-centered is-rounded">
+                            <img src="{{ dados['urlimage'] }}" alt="Image">
+                        </div>
+
+                        <div id="file-js-example" class="file is-right is-info">
+                            <label class="file-label">
+                                <input class="file-input" type="file" name="foto">
+                                <span class="file-cta">
+                                <span class="file-icon">
+                                    <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                    Foto de Perfil
+                                </span>
+                                </span>
+                                <span class="file-name">
+                                Nenhuma foto seleciona...
+                                </span>
+                            </label>
+                        </div>
+
+                          <script>
+                            const fileInput = document.querySelector('#file-js-example input[type=file]');
+                            fileInput.onchange = () => {
+                              if (fileInput.files.length > 0) {
+                                const fileName = document.querySelector('#file-js-example .file-name');
+                                fileName.textContent = fileInput.files[0].name;
+                              }
+                            }
+                          </script>
+
+                    </div>
+
+                    <div class="column">
+
+                        <label class="label mb-0">
+                            <span class="is-size-7">Nome Fantasia</span>
+                        </label>
+                        <div class="controll has-icons-left">
+                            <input type="text" class="input" name="nf" placeholder="{{ dados['nf'] }}" value="{{ dados['nf'] }}">
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                        </div>
+
+                        <div class="columns">
+                            <div class="column">
+                                <label class="label mb-0">
+                                    <span class="is-size-7">Cidade</span>
+                                </label>
+                                <div class="controll has-icons-left">
+                                    <input type="text" class="input" name="estado" placeholder="{{ dados['estado'] }}" id="myInput" value="{{ dados['estado'] }}">
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="column is-3">
+                                <label class="label mb-0">
+                                    <span class="is-size-7">UF</span>
+                                </label>
+                                <div class="controll has-icons-left">
+                                    <input type="text" class="input" name="uf" placeholder="{{ dados['uf'] }}" id="myInput" value="{{ dados['uf'] }}">
+                                    <span class="icon is-small is-left">
+                                        <i class="fa fa-envelope"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label class="label mb-0">
+                            <span class="is-size-7">Telefone Celular</span>
+                        </label>
+                        <div class="controll has-icons-left">
+                            <input type="number" class="input" name="telcel" placeholder="{{ dados['telcel'] }}" id="myInput" value="{{ dados['telcel'] }}">
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                        </div>
+
+                        <label class="label pt-5">
+                            <a class="button is-danger" href="/resetpw/{{ session['FBLogin']['email'] }}"> Refazer Minha Senha </a>
+                        </label>
+
+
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="columns has-text-centered">
+                <div class="column">
+                    <input type="submit" class="button is-link level-left" value="Salvar"></input>
+                </div>
+            </div>
+           </form>
+    </div>
+</div>
+</section>
+{% endblock %}
